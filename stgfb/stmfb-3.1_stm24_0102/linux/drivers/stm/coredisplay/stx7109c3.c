@@ -119,7 +119,7 @@ static struct stmcore_display_pipeline_data platform_data[] = {
     .vtg_irq                  = 154,
     .blitter_irq              = 156,
     .hdmi_irq                 = 158,
-#if defined(UFS922)
+#if defined(UFS922) || defined(UFC960)
 /* Dagobert: for stlinux23 this is mb422 but i2c is on bus 2 instead! */
     .hdmi_i2c_adapter_id      = 2,
 #elif defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1)
@@ -233,7 +233,7 @@ static const int chromaScale = 112500; // 112.500%, from DENC validation report
 #endif /* STx7109c3_USE_HDMI_HOTPLUG */
 #else
 
-#if defined(UFS922)
+#if defined(UFS922) || defined(UFC960)
 #define GPIO_PIN_HOTPLUG stm_gpio(2,3)
 #elif defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
 #define GPIO_PIN_HOTPLUG stm_gpio(4,7)
@@ -311,7 +311,7 @@ int __init stmcore_probe_device(struct stmcore_display_pipeline_data **pd,
         claimed_gpio_hotplug = true;
 
 #ifdef __TDT__
-#if defined(UFS922) || defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || \
+#if defined(UFS922) || defined(UFC960) || defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || \
     defined(FORTIS_HDBOX) || defined(OCTAGON1008)
       gpio_direction_input(GPIO_PIN_HOTPLUG);
 #endif

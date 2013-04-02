@@ -179,7 +179,7 @@ static const struct snd_pseudo_mixer_downstream_topology default_topology[] = {
    {
       {
 #if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,17)
-   #if defined(__TDT__) && ! defined(UFS922)
+   #if defined(__TDT__) && ! defined(UFS922) && ! defined(UFC960)
       CARD_SPDIF  ("SPDIF",   2, 0,  48000, 2),
       CARD        ("Analog",  1, 0,  48000, 2),
       CARD        ("HDMI",    0, 0,  48000, 2),
