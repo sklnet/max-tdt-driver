@@ -15,7 +15,7 @@ ifdef UFS922
 ufs922_cic-objs += ufs9xx_cic/ufs9xx_cic.o
 obj-m += ufs922_cic.o
 else ifdef UFC960
-ufc960_cic-objs += ufs9xx_cic/ufs9xx_cic.o
+ufc960_cic-objs += dummy_cic/dummy_cic.o
 obj-m += ufc960_cic.o
 else ifdef UFS912
 ufs912_cic-objs += ufs9xx_cic/ufs9xx_cic.o
