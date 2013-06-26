@@ -349,7 +349,7 @@ HavanaStatus_t HavanaStream_c::Init    (class HavanaPlayer_c*   HavanaPlayer,
 
         VideoManifestor->GetOutputWindow (&X, &Y, &Width, &Height);
         STREAM_TRACE ("Window is %dx%d at %d,%d\n", Width, Height, X, Y);
-#if 0
+#if 1
         if ((Width <= SCALING_THRESHOLD_WIDTH) || (Height < SCALING_THRESHOLD_HEIGHT))
         {
             STREAM_TRACE ("Enabling Decimation\n");
@@ -1081,7 +1081,7 @@ HavanaStatus_t HavanaStream_c::SetOutputWindow (unsigned int            X,
         }
 
         VideoManifestor->GetOutputWindow (&X, &Y, &Width, &Height);
-#if 0
+#if 1
         if ((Width <= SCALING_THRESHOLD_WIDTH) || (Height < SCALING_THRESHOLD_HEIGHT))
         {
             STREAM_TRACE ("Enabling Decimation\n");
