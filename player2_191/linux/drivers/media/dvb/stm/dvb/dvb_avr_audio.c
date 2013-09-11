@@ -21,7 +21,9 @@ license from ST.
  * V4L2 dvp output device driver for ST SoC display subsystems.
 ************************************************************************/
 
+#if !defined(__TDT__)
 #include <asm/semaphore.h>
+#endif
 #include <asm/page.h>
 #include <asm/io.h>
 #include <asm/page.h>
@@ -38,6 +40,11 @@ license from ST.
 #include <linux/poll.h>
 #include <linux/mm.h>
 #include <linux/version.h>
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,30)
+#include <asm/semaphore.h>
+#else
+#include <linux/semaphore.h>
+#endif
 #include <linux/videodev.h>
 #include <linux/interrupt.h>
 #include <linux/kthread.h>
@@ -402,7 +409,7 @@ static int InsertPesHeader (unsigned char *data, int size, unsigned char stream_
     BitPacker_t ld2 = {data, 0, 32};
 
     if (size>MAX_PES_PACKET_SIZE)
-        DVB_DEBUG("Packet bigger than 63.9K eeeekkkkk\n");
+        DVB_DEBUG("Packet size %d is bigger than %d eeeekkkkk\n", size, MAX_PES_PACKET_SIZE);
 
     PutBits(&ld2,0x0  ,8);
     PutBits(&ld2,0x0  ,8);
@@ -2710,7 +2717,7 @@ static int SetGlobalTransformParameters( avr_v4l2_audio_handle_t *AudioContext,
         MME_LowLatencyIO_t *IoCfg = GlobalParams->IOCfg;
         struct snd_pseudo_mixer_downstream_topology * Topology = &mixer_settings->downstream_topology;
         unsigned int inp_idx, out_idx;
-	bool         mch_enable;
+	bool         mch_enable = true;
         
 	// Use the user settings if the user has requested custom DRC
 	if (mixer_settings->drc_enable) {

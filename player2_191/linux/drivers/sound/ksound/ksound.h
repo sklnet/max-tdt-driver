@@ -127,7 +127,7 @@ typedef int (snd_kcontrol_get_t) (struct snd_kcontrol * kcontrol, struct snd_ctl
 typedef int (snd_kcontrol_put_t) (struct snd_kcontrol * kcontrol, struct snd_ctl_elem_value * ucontrol);
 
 
-typedef struct snd_ctl_file { int dummy; };
+struct snd_ctl_file { int dummy; };
 typedef int pid_t;
 
 struct snd_kcontrol_volatile {
@@ -224,11 +224,6 @@ struct snd_pcm_hw_params {
 #else
 //#warning KSOUND.H AS C INCLUDE
 
-#if defined(__TDT__) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
-// sound/driver.h does not exist in stlinux24
-#else
-#include <sound/driver.h>
-#endif
 #include <sound/core.h>
 #include <sound/minors.h>
 #include <sound/pcm.h>
@@ -382,6 +377,7 @@ void ksnd_ctl_elem_value_set_integer(snd_ctl_elem_value_t *obj, unsigned int idx
 void ksnd_ctl_elem_value_set_iec958(snd_ctl_elem_value_t *obj, const struct snd_aes_iec958 *ptr);
 int ksnd_hctl_elem_write(snd_kcontrol_t *elem, snd_ctl_elem_value_t *control);
 #endif
+
 
 /*
  * capture -> playback stream redirection

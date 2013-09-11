@@ -98,7 +98,7 @@ extern struct DeviceContext_s* DeviceContext;
 
 static int current_standby = 0;
 static int current_input = ENCODER;
-#if defined(CUBEREVO) || defined(CUBEREVO_MINI) || defined(CUBEREVO_MINI2) || defined(CUBEREVO_MINI_FTA) || defined(CUBEREVO_250HD) || defined(CUBEREVO_2000HD) || defined(CUBEREVO_9500HD) || defined(TF7700) || defined(UFS912) || defined(UFS922) || defined(UFC960) || defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(HOMECAST5101) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(WHITEBOX) || defined(IPBOX9900) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX)
+#if defined(CUBEREVO) || defined(CUBEREVO_MINI) || defined(CUBEREVO_MINI2) || defined(CUBEREVO_MINI_FTA) || defined(CUBEREVO_250HD) || defined(CUBEREVO_2000HD) || defined(CUBEREVO_9500HD) || defined(TF7700) || defined(UFS912) || defined(UFS922) || defined(UFC960) || defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(HOMECAST5101) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(WHITEBOX) || defined(IPBOX9900) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX) || defined(VITAMIN_HD5000)
 static int current_volume = 0;
 #else
 static int current_volume = 31;
@@ -150,7 +150,7 @@ int proc_avs_0_volume_write(struct file *file, const char __user *buf, unsigned 
 
 		sscanf(myString, "%d", &volume);
 
-#if defined(CUBEREVO) || defined(CUBEREVO_MINI) || defined(CUBEREVO_MINI2) || defined(CUBEREVO_MINI_FTA) || defined(CUBEREVO_250HD) || defined(CUBEREVO_2000HD) || defined(CUBEREVO_9500HD) || defined(TF7700) || defined(UFS912) || defined(UFS922) || defined(UFC960) || defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(HOMECAST5101) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(WHITEBOX) || defined(IPBOX9900) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX)
+#if defined(CUBEREVO) || defined(CUBEREVO_MINI) || defined(CUBEREVO_MINI2) || defined(CUBEREVO_MINI_FTA) || defined(CUBEREVO_250HD) || defined(CUBEREVO_2000HD) || defined(CUBEREVO_9500HD) || defined(TF7700) || defined(UFS912) || defined(UFS922) || defined(UFC960) || defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(HOMECAST5101) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(WHITEBOX) || defined(IPBOX9900) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX) || defined(VITAMIN_HD5000)
 		current_volume = volume;
 #else
 /* Dagobert: 04.10.2009: e2 delivers values from 0 to 63 db. the ak4705
@@ -291,27 +291,26 @@ int proc_avs_0_input_write(struct file *file, const char __user *buf, unsigned l
 
 			// Note: Volumne is not changed directly but by using the MIXER instead of the AVS. 
 			// So this should always be set to the maximum
-			#if defined(UFS910) || defined(ADB_BOX)
+#if defined(UFS910) || defined(ADB_BOX)
 			avs_command_kernel(AVSIOSVOL, (void*) 31);
-			#else
+#else
 			avs_command_kernel(AVSIOSVOL, (void*) 0);
-			#endif
-			#if defined(ADB_BOX)
+#endif
+#if defined(ADB_BOX)
 			avs_command_kernel(SAAIOSWSS, (void*) SAA_WSS_43F);
 			outputConfig.hdmi_config &= ~STMFBIO_OUTPUT_HDMI_DISABLED;
-			#endif
+#endif
 			current_input = ENCODER;
 		}
 
 		if(!strncmp("scart", myString, count - 1))
 		{
 			avs_command_kernel(SAAIOSSRCSEL, (void*) SAA_SRC_SCART);
-
 			avs_command_kernel(AVSIOSVOL, (void*) current_volume);
-			#if defined(ADB_BOX)
-				avs_command_kernel(SAAIOSWSS, (void*) SAA_WSS_OFF);
-				outputConfig.hdmi_config |= STMFBIO_OUTPUT_HDMI_DISABLED;
-			#endif
+#if defined(ADB_BOX)
+			avs_command_kernel(SAAIOSWSS, (void*) SAA_WSS_OFF);
+			outputConfig.hdmi_config |= STMFBIO_OUTPUT_HDMI_DISABLED;
+#endif
 			current_input = SCART;
 		}
 
