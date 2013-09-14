@@ -15,7 +15,7 @@ ifdef UFS922
 ufs922_cic-objs += ufs9xx_cic/ufs9xx_cic.o
 obj-m += ufs922_cic.o
 else ifdef UFC960
-ufc960_cic-objs += dummy_cic/dummy_cic.o
+ufc960_cic-objs += ufs9xx_cic/ufs9xx_cic.o
 obj-m += ufc960_cic.o
 else ifdef UFS912
 ufs912_cic-objs += ufs9xx_cic/ufs9xx_cic.o
@@ -80,6 +80,9 @@ obj-m += dummy_cic.o
 else ifdef IPBOX55
 dummy_cic-objs += dummy_cic/dummy_cic.o
 obj-m += dummy_cic.o
+else ifdef VITAMIN_HD5000
+obj-m += starci.o
+starci-objs:= vitamin_hd5000/starci2win.o
 else
 cimax-objs += cimax/cimax.o
 obj-m += cimax.o
