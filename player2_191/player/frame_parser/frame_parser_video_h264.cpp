@@ -5407,12 +5407,15 @@ report( severity_info, "NickQ NonPairedOutput - (%d %d) (%d %d) (%d %d)\n",
     //
 
     // fix juddering on some HD channels
-    /* if( ForceInterlacedProgressive )
+#if 0
+    if( ForceInterlacedProgressive )
     {
 	DeducedInterlacedFlag		= ForcedInterlacedFlag;
 	DeducedTopFieldFirst		= SliceHeader->PicOrderCntTop <= SliceHeader->PicOrderCntBot;
     }
-    else */if( FixDeducedFlags )
+    else
+#endif
+    if( FixDeducedFlags )
     {
 	// Leave flags as set
     }
@@ -5444,14 +5447,14 @@ report( severity_info, "NickQ NonPairedOutput - (%d %d) (%d %d) (%d %d)\n",
 
     switch( SPS->vui_seq_parameters.matrix_coefficients )
     {
-	case H264_MATRIX_COEFFICIENTS_BT709:	MatrixCoefficients	= MatrixCoefficients_ITU_R_BT709;	break;
+	case H264_MATRIX_COEFFICIENTS_BT709:		MatrixCoefficients	= MatrixCoefficients_ITU_R_BT709;	break;
 	case H264_MATRIX_COEFFICIENTS_FCC:		MatrixCoefficients	= MatrixCoefficients_FCC;		break;
 	case H264_MATRIX_COEFFICIENTS_BT470_BGI:	MatrixCoefficients	= MatrixCoefficients_ITU_R_BT470_2_BG;	break;
 	case H264_MATRIX_COEFFICIENTS_SMPTE_170M:	MatrixCoefficients	= MatrixCoefficients_SMPTE_170M;	break;
 	case H264_MATRIX_COEFFICIENTS_SMPTE_240M:	MatrixCoefficients	= MatrixCoefficients_SMPTE_240M;	break;
 
 	case H264_MATRIX_COEFFICIENTS_IDENTITY:
-	case H264_MATRIX_COEFFICIENTS_YCGCO:	report( severity_error, "FrameParser_VideoH264_c::CommitFrameForDecode - Unsupported matrix coefficient code specified (%02x).\n", SPS->vui_seq_parameters.matrix_coefficients );
+	case H264_MATRIX_COEFFICIENTS_YCGCO:		report( severity_error, "FrameParser_VideoH264_c::CommitFrameForDecode - Unsupported matrix coefficient code specified (%02x).\n", SPS->vui_seq_parameters.matrix_coefficients );
 							Player->MarkStreamUnPlayable( Stream );
 							return FrameParserHeaderSyntaxError;
 
