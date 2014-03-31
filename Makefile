@@ -131,7 +131,7 @@ obj-y += simu_button/
 obj-y += e2_proc/
 obj-y += frontends/
 obj-y += frontcontroller/
-obj-y += wireless/
+#obj-y += wireless/
 
 ifeq (,$(wildcard $(DRIVER_TOPDIR)/pti_np ))
 obj-y += pti/
@@ -243,17 +243,20 @@ obj-y += siinfo/
 obj-y += rmu/
 obj-y += ipbox99xx_fan/
 obj-y += smartcard/
+obj-y += cpu_frequ/
 endif
 
 ifdef IPBOX99
 obj-y += siinfo/
 obj-y += ipbox99xx_fan/
 obj-y += smartcard/
+obj-y += cpu_frequ/
 endif
 
 ifdef IPBOX55
 obj-y += siinfo/
 obj-y += smartcard/
+obj-y += cpu_frequ/
 endif
 
 ifdef CUBEREVO
