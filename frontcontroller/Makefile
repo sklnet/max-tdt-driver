@@ -124,3 +124,8 @@ endif
 ifdef VITAMIN_HD5000
 obj-y	+= vitamin_hd5000/
 endif
+
+ifdef SAGEMCOM88
+obj-y	+= front_led/
+obj-y	+= front_vfd/
+endif
