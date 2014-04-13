@@ -287,6 +287,7 @@ ifdef SAGEMCOM88
 obj-y	+= cec/
 obj-y	+= smartcard/
 obj-y	+= cpu_frequ/
+obj-y	+= sagemcomtype/
 endif
 
 endif
