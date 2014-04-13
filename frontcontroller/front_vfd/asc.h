@@ -4,17 +4,17 @@
 /* ************************************************** */
 /* Access ASC3; from u-boot; copied from TF7700 ;-)   */
 /* ************************************************** */
-#ifdef ESI88
+/*#ifdef ESI88*/
 #define ASC0BaseAddress 0xfd030000
 #define ASC1BaseAddress 0xfd031000
 #define ASC2BaseAddress 0xfd032000
 #define ASC3BaseAddress 0xfd033000
-#else
+/*#else
 #define ASC0BaseAddress 0xb8030000
 #define ASC1BaseAddress 0xb8031000
 #define ASC2BaseAddress 0xb8032000
 #define ASC3BaseAddress 0xb8033000
-#endif
+#endif*/
 
 #define ASC_BAUDRATE    0x000
 #define ASC_TX_BUFF     0x004

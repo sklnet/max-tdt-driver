@@ -30,7 +30,7 @@
 #define KEY_L__	stm_gpio(6, 7)
 #define KEY_PWR		stm_gpio(6, 5)
 
-static char *button_driver_name = "BOX frontpanel buttons";
+static char *button_driver_name = "SagemCom88 frontpanel buttons";
 static struct input_dev *button_dev;
 static struct workqueue_struct *wq;
 static int bad_polling = 1;
@@ -774,6 +774,6 @@ return 0;
 module_init(led_module_init);
 module_exit(led_module_exit);
 
-MODULE_DESCRIPTION("ESI88 front_led driver");
+MODULE_DESCRIPTION("SagemCom88 front_led driver");
 MODULE_AUTHOR("Nemo");
 MODULE_LICENSE("GPL");
