@@ -45,7 +45,7 @@ static short camRouting = 0;
 module_param(camRouting, short, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 MODULE_PARM_DESC(camRouting, "Enable camRouting 0=disabled 1=enabled");
 
-#if defined(UFS912) || defined(UFS913) || defined(SPARK) || defined(SPARK7162) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000)
+#if defined(UFS912) || defined(UFS913) || defined(SPARK) || defined(SPARK7162) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000) || defined(SAGEMCOM88)
 #define TSMergerBaseAddress   	0xFE242000
 #else
 #define TSMergerBaseAddress   	0x19242000
@@ -116,7 +116,7 @@ MODULE_PARM_DESC(camRouting, "Enable camRouting 0=disabled 1=enabled");
 
 #define TSM_SWTS      		0x010BE000
 
-#if defined(UFS912) || defined(UFS913) || defined(SPARK) || defined(SPARK7162) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000)
+#if defined(UFS912) || defined(UFS913) || defined(SPARK) || defined(SPARK7162) || defined(ATEVIO7500) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000) || defined(SAGEMCOM88)
 #define SysConfigBaseAddress    0xFE001000
 #else
 #define SysConfigBaseAddress    0x19001000
@@ -624,7 +624,7 @@ void stm_tsm_init (int use_cimax)
    int              n;
 
 //#if defined(UFS910) ???
-#if defined(VIP2_V1) || defined(SPARK) || defined(SPARK7162) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX) || defined(CUBEREVO_2000HD) // none ci targets
+#if defined(VIP2_V1) || defined(SPARK) || defined(SPARK7162) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX) || defined(CUBEREVO_2000HD) || defined(SAGEMCOM88) // none ci targets
    use_cimax = 0;
 #endif
 
@@ -1385,12 +1385,46 @@ else
       if (reinit) {
          printk("reinit\n");
       } else {
-#if defined(SPARK) || defined(SPARK7162) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000)
+#if defined(SPARK) || defined(SPARK7162) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000) || defined(SAGEMCOM88)
          tsm_io = ioremap (/* config->tsm_base_address */ TSMergerBaseAddress, 0x1000);
 #else // !defined(SPARK) && !defined(SPARK7162) && !defined(HS7110) && !defined(ATEMIO520) && !defined(ATEMIO530)
          tsm_io = ioremap (/* config->tsm_base_address */ 0x19242000, 0x1000);
 #endif
       }
+#if defined(SAGEMCOM88)
+	//dvbt usb
+	tsm_handle.tsm_io = ioremap(TSMergerBaseAddress, 0x1000);
+	tsm_handle.tsm_swts = (unsigned long)ioremap (0x1A300000, 0x1000);
+	ctrl_outl( TSM_SWTS_REQ_TRIG(128/16) | 12, tsm_io + TSM_SWTS_CFG(0));//12
+	ctrl_outl( 0, tsm_io + TSM_SWTS_CFG(1));
+	ctrl_outl( 0, tsm_io + TSM_SWTS_CFG(2));
+
+    // pio12
+    ctrl_outl(0x0, 0xfe015020);
+    ctrl_outl(0x0, 0xfe015030);
+    ctrl_outl(0x0, 0xfe015040);
+    //alternate 1
+    ctrl_outl(0x0, reg_sys_config + 0x1c0); // sys_cfg48/
+
+    //pio6
+    ctrl_outl(0x0, 0xfd026020);
+    ctrl_outl(0x0, 0xfd026030);
+    ctrl_outl(0x0, 0xfd026040);
+    //alternate 2
+    ctrl_outl(0x00ff, reg_sys_config + 0x190); // sys_cfg36/
+
+    //pio6 = TSIN2
+    ret = ctrl_inl(reg_sys_config + 0x110);
+    ctrl_outl((ret & ~(1<<10)), reg_sys_config + 0x110); // sys_cfg4
+    //pio6/0 not used PCI mode
+    ret = ctrl_inl(reg_sys_config + 0x114);
+    ctrl_outl((ret | (1<<27)), reg_sys_config + 0x114); // sys_cfg5/
+
+    //route
+    ctrl_outl(0x8, reg_sys_config + SYS_CFG0);//tsin2>2 and tsin3>3
+
+#endif
+
 #if defined(ADB_BOX)
     //dvbt dla NBOX
       tsm_handle.tsm_io = ioremap(TSMergerBaseAddress, 0x0900);

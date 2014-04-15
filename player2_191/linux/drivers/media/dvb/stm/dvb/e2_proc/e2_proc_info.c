@@ -49,6 +49,8 @@ int proc_info_model_read (char *page, char **start, off_t off, int count, int *e
 	len = sprintf(page, "adb_box\n"); 
 #elif defined(VITAMIN_HD5000)
 	len = sprintf(page, "vitamin_hd5000\n");
+#elif defined(SAGEMCOM88)
+    len = sprintf(page, "sagemcom88\n"); 
 #else
 	len = sprintf(page, "ufs910\n");
 #endif

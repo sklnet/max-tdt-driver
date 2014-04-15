@@ -75,7 +75,7 @@ extern void cx24116_register_frontend(struct dvb_adapter *dvb_adap);
 extern void avl2108_register_frontend(struct dvb_adapter *dvb_adap);
 #elif defined(UFC960)
 extern void fe_core_register_frontend(struct dvb_adapter *dvb_adap);
-#elif defined(FORTIS_HDBOX) || defined(UFS912) || defined(SPARK) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000)
+#elif defined(FORTIS_HDBOX) || defined(UFS912) || defined(SPARK) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000) || defined(SAGEMCOM88)
 extern void stv090x_register_frontend(struct dvb_adapter *dvb_adap);
 #elif defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(IPBOX9900) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX)
 extern void fe_core_register_frontend(struct dvb_adapter *dvb_adap);
@@ -535,7 +535,7 @@ void ptiInit ( struct DeviceContext_s *pContext )
     pti_hal_init ( &pti, &pContext->DvbDemux, demultiplexDvbPackets, 1);
 #endif
 
-#if defined(FORTIS_HDBOX) || defined(UFS912) || defined(SPARK) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000)
+#if defined(FORTIS_HDBOX) || defined(UFS912) || defined(SPARK) || defined(HS7810A) || defined(HS7110) || defined(ATEMIO520) || defined(ATEMIO530) || defined(VITAMIN_HD5000) || defined(SAGEMCOM88)
     stv090x_register_frontend(&pContext->DvbContext->DvbAdapter);
 #elif defined(HL101) || defined(VIP1_V2) || defined(VIP2_V1) || defined(IPBOX9900) || defined(IPBOX99) || defined(IPBOX55) || defined(ADB_BOX)
     fe_core_register_frontend( &pContext->DvbContext->DvbAdapter);
@@ -608,7 +608,16 @@ int SetSource (struct dmx_demux* demux, const dmx_source_t *src)
     return -EINVAL;
   }
 
-  printk("SetSource(%p, %d)\n", pDvbDemux, *src);
+  printk("SetSource(%p, %d) >> ", pDvbDemux, *src);
+    if (*src == DMX_SOURCE_FRONT0) printk("DMX_SOURCE_FRONT0\n");
+    else
+    if (*src == DMX_SOURCE_FRONT1) printk("DMX_SOURCE_FRONT1\n");
+    else
+    if (*src == DMX_SOURCE_FRONT2) printk("DMX_SOURCE_FRONT2\n");
+    else
+    if (*src == DMX_SOURCE_FRONT3) printk("DMX_SOURCE_FRONT3\n");
+    else
+    if (*src == DMX_SOURCE_DVR0) printk("DMX_SOURCE_DVR0\n");
 
   pContext->pPtiSession->source = *src;
 
