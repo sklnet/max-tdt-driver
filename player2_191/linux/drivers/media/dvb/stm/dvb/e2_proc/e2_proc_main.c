@@ -167,6 +167,16 @@
  *  |                 |TODO
  *  |               | v
  *  |               --------- progressive
+*  |
+ *  ---------- fb
+ *  |           |
+ *  |           --------- dst_left   \
+ *  |           |                     |
+ *  |           --------- dst_top     | 
+ *  |           |                      >  PIG WINDOW SIZE AND POSITION
+ *  |           --------- dst_width   |
+ *  |           |                     |
+ *  |           --------- dst_height /
  *
  */
 
@@ -430,6 +440,11 @@ struct e2_procs
   {"stb/vmpeg/1/xres",                  proc_vmpeg_0_xres_read,                 NULL, 1},
   {"stb/vmpeg/1/aspect",                proc_vmpeg_0_aspect_read,               NULL, 1},
   {"stb/vmpeg/1/framerate",             proc_vmpeg_0_framerate_read,            NULL, 1},
+
+  {"stb/fb/dst_left",                   proc_vmpeg_0_dst_left_read,             proc_vmpeg_0_dst_left_write, 0},
+  {"stb/fb/dst_top",                    proc_vmpeg_0_dst_top_read,              proc_vmpeg_0_dst_top_write, 0},
+  {"stb/fb/dst_width",                  proc_vmpeg_0_dst_width_read,            proc_vmpeg_0_dst_width_write, 0},
+  {"stb/fb/dst_height",                 proc_vmpeg_0_dst_height_read,           proc_vmpeg_0_dst_height_write, 0},
 
   {"stb/hdmi/bypass_edid_checking",     proc_hdmi_edid_handling_read,           proc_hdmi_edid_handling_write, 0},
 /*

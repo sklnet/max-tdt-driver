@@ -1681,7 +1681,7 @@ PlayerStatus_t Mixer_Mme_c::StartPlaybackThread()
 
     PlaybackThreadRunning = true;
 
-    if( OS_CreateThread( &PlaybackThreadId, PlaybackThreadStub, this, "Player Aud Mixer",
+    if( OS_CreateThread( &PlaybackThreadId, PlaybackThreadStub, this, "Player_Aud_Mixer",
 			 AudioConfiguration.MixerPriority ) != OS_NO_ERROR )
     {
 	MIXER_ERROR( "Unable to create mixer playback thread\n" );

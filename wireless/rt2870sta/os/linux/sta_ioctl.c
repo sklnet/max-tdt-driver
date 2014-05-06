@@ -1827,7 +1827,11 @@ rt_private_show(struct net_device *dev, struct iw_request_info *info,
             wrq->length = strlen(extra) + 1; // 1: size of '\0'
             break;
         case SHOW_DRVIER_VERION:
+#ifdef INCLUDE_BUILDDATE
             sprintf(extra, "Driver version-%s, %s %s\n", STA_DRIVER_VERSION, __DATE__, __TIME__ );
+#else
+            sprintf(extra, "Driver version-%s\n", STA_DRIVER_VERSION);
+#endif
             wrq->length = strlen(extra) + 1; // 1: size of '\0'
             break;
 #ifdef DOT11_N_SUPPORT

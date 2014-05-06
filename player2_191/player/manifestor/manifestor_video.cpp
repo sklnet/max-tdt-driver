@@ -261,7 +261,7 @@ ManifestorStatus_t      Manifestor_Video_c::GetDecodeBufferPool         (class B
             return ManifestorError;
         }
         BufferReleaseThreadRunning      = true;
-        if (OS_CreateThread (&BufferReleaseThreadId, BufferReleaseThreadStub, this, "Manifestor Buffer Release Thread", OS_MID_PRIORITY+16) != OS_NO_ERROR)
+        if (OS_CreateThread (&BufferReleaseThreadId, BufferReleaseThreadStub, this, "Manifestor_Buffer_Release_Thread", OS_MID_PRIORITY+16) != OS_NO_ERROR)
         {
             MANIFESTOR_ERROR("Unable to create Buffer Release thread\n");
             BufferReleaseThreadId       = OS_INVALID_THREAD;
@@ -294,7 +294,7 @@ ManifestorStatus_t      Manifestor_Video_c::GetDecodeBufferPool         (class B
             return ManifestorError;
         }
         DisplaySignalThreadRunning      = true;
-        if (OS_CreateThread (&DisplaySignalThreadId, DisplaySignalThreadStub, this, "Manifestor Display Signal Thread", (OS_HIGHEST_PRIORITY+OS_MID_PRIORITY)/2) != OS_NO_ERROR)
+        if (OS_CreateThread (&DisplaySignalThreadId, DisplaySignalThreadStub, this, "Manifestor_Display_Signal_Thread", (OS_HIGHEST_PRIORITY+OS_MID_PRIORITY)/2) != OS_NO_ERROR)
         {
             MANIFESTOR_ERROR("Unable to create Display Signal thread\n");
             DisplaySignalThreadId       = OS_INVALID_THREAD;

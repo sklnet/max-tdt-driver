@@ -25,6 +25,9 @@
 #include "dvb_frontend.h"
 #include "sharp7803.h"
 
+extern int debug_fe7162;
+#define _DEBUG if (debug_fe7162)
+
 struct sharp7803_state {
 	struct dvb_frontend		*fe;
 	struct i2c_adapter		*i2c;
@@ -47,11 +50,14 @@ static int sharp7803_write(struct sharp7803_state *state, u8 reg, u8 *buf, u8 le
 	aBuf[0] = reg;
 	memcpy(&aBuf[1], buf, len);
 
+_DEBUG
+{
 	for (i = 0; i < len + 1; i++)
 	{
 		printk("%02x ", aBuf[i]);
 	}
 	printk("\n");
+}
 
 	err = i2c_transfer(state->i2c, &msg, 1);
 	if (err != 1)
@@ -97,11 +103,13 @@ static int sharp7803_get_status(struct dvb_frontend *fe, u32 *status)
 	}
 	if (result[0] & 0x40)
     {
+_DEBUG
 		printk("%s: Tuner Phase Locked\n", __func__);
 		*status = 1;
 	}
 	else
 	{
+_DEBUG
 		printk("%s: Tuner Phase Not Locked result - 0x%x, 0x%x,\n", __func__, result[0], result[1]);
 	}
 
@@ -300,6 +308,7 @@ static int sharp7803_init(struct dvb_frontend *fe)
 	mdelay(1);
     /*¶Átuner*/
     Error |= sharp7803_read(state, 0, &chip_id);
+_DEBUG
     printk("chip_id = %d\n", chip_id);
 
     // Write fixed value

@@ -49,10 +49,10 @@ Date        Modification                                    Name
 
 static const char *ProcessNames[4][4] = 
 {
-    { "Player None  0", "Player None  1", "Player None  2", "Player None  3" },
-    { "Player Aud   0", "Player Aud   1", "Player Aud   2", "Player Aud   3" },
-    { "Interocitor  0", "Interocitor  1", "Interocitor  2", "Interocitor  3" },
-    { "Player Other 0", "Player Other 1", "Player Other 2", "Player Other 3" }
+    { "Player_None_0", "Player_None_1", "Player_None_2", "Player_None_3" },
+    { "Player_Aud_0", "Player_Aud_1", "Player_Aud_2", "Player_Aud_3" },
+    { "Interocitor_0", "Interocitor_1", "Interocitor_2", "Interocitor_3" },
+    { "Player_Other_0", "Player_Other_1", "Player_Other_2", "Player_Other_3" }
 };
 
 

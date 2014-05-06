@@ -8,6 +8,9 @@
 #include "dvb_frontend.h"
 #include "sharp6465.h"
 
+extern int debug_fe7162;
+#define _DEBUG if (debug_fe7162)
+
 struct sharp6465_state {
 	struct dvb_frontend		*fe;
 	struct i2c_adapter		*i2c;
@@ -47,6 +50,7 @@ static int sharp6465_write(struct sharp6465_state *state, u8 *buf, u8 length)
 	int err = 0;
 	struct i2c_msg msg = { .addr = config->addr, .flags = 0, .buf = buf, .len = length };
 
+_DEBUG
 	printk(KERN_ERR "%s: state->i2c=<%d>, config->addr = %d\n",
 			__func__, (int)state->i2c, config->addr);
 
@@ -74,6 +78,7 @@ static int sharp6465_get_status(struct dvb_frontend *fe, u32 *status)
 
 	if (result[0] & 0x40)
 	{
+_DEBUG
 		printk(KERN_DEBUG "%s: Tuner Phase Locked\n", __func__);
 		*status = 1;
 	}
@@ -140,6 +145,7 @@ static	void calculate_mop_divider(u32 freq, int *byte)
 	i64Freq += 5;
 	i64Freq /= 10;
 	data = (long)i64Freq;
+_DEBUG
 	printk(KERN_ERR "%s: data = %ld\n", __func__, data);
 	//data = (long)((freq + calculate_mop_if())/calculate_mop_step(byte) + 0.5);
 	*(byte+1) = (int)((data>>8)&0x7F);		//byte2
@@ -248,6 +254,7 @@ static int sharp6465_set_params(struct dvb_frontend* fe,
 	u32 f = params->frequency;
 	struct dvb_ofdm_parameters *op = &params->u.ofdm;
 
+_DEBUG
 	printk(KERN_ERR "%s: f = %d, bandwidth = %d\n", __func__, f, op->bandwidth);
 
 	tuner_SHARP6465_CalWrBuffer(f/1000,
@@ -278,6 +285,7 @@ static int sharp6465_set_params(struct dvb_frontend* fe,
 	if (fe->ops.i2c_gate_ctrl(fe, 1) < 0)
 		goto exit;
 	sharp6465_get_status(fe, &status);
+_DEBUG
 	printk(KERN_ERR "%s: status = %d\n", __func__, status);
 
 	return 0;

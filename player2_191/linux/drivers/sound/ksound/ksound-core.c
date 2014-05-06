@@ -1207,9 +1207,9 @@ static int _ksnd_pcm_write_transfer(snd_pcm_substream_t *substream,
 	char *buf = (char *) data + samples_to_bytes(runtime, off*srcchannels);
 	char *uncachedbuf = ioremap_nocache(runtime->dma_addr, runtime->dma_bytes);
 	char *hwbuf = uncachedbuf + frames_to_bytes(runtime, hwoff);
-
+#ifdef VERY_VERBOSE
 	printk("offset %d base %p samples %p\n", hwoff, uncachedbuf, hwbuf);
-
+#endif
 	if (srcchannels == runtime->channels) {
 		memcpy(hwbuf, buf, frames_to_bytes(runtime, frames));
 	} else {
@@ -2036,7 +2036,9 @@ int ksnd_hctl_elem_write(snd_kcontrol_t *elem, snd_ctl_elem_value_t *control)
 
 static int __init ksnd_module_init(void)
 {
+#ifdef VERY_VERBOSE
 	printk(KERN_DEBUG "ksound: Built %s %s\n", __DATE__, __TIME__);
+#endif
 	return 0;
 }
 

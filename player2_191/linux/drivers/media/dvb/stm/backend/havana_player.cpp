@@ -170,7 +170,7 @@ HavanaStatus_t HavanaPlayer_c::Init (void)
             return HavanaError;
         }
         EventSignalThreadRunning        = true;
-        if (OS_CreateThread (&EventSignalThreadId, EventSignalThreadStub, this, "Havana player Event Signal Thread", OS_MID_PRIORITY) != OS_NO_ERROR)
+        if (OS_CreateThread (&EventSignalThreadId, EventSignalThreadStub, this, "Havana_player_Event_Signal_Thread", OS_MID_PRIORITY) != OS_NO_ERROR)
         {
             HAVANA_ERROR("Unable to create Display Signal thread\n");
             EventSignalThreadRunning    = false;

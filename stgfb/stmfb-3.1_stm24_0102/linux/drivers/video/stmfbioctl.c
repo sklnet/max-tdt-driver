@@ -177,10 +177,10 @@ static int stmfbio_do_blit_extern(stm_display_blitter_t *blitter,
   stm_rect_t srcrect;
   stm_rect_t dstrect;
   int ret = 0;
-
+#ifdef VERY_VERBOSE
   printk("src_off = 0x%lx src_pitch = 0x%lx\n", pData->srcOffset, pData->srcPitch);
   printk("dst_off = 0x%lx dst_pitch = 0x%lx\n", pData->dstOffset, pData->dstPitch);
-
+#endif
   if(pData->dst_left < pData->dst_right)
   {
     dstrect.left   = pData->dst_left;

@@ -152,6 +152,7 @@ static int __init PlayerLoadModule (void)
 {
 
     report_init ();
+    report_restricted_severity_levels(severity_fatal, severity_interrupt * 10);
 
     DisplayInit ();
     BackendInit ();
