@@ -534,7 +534,7 @@ int proc_vmpeg_0_framerate_read (char *page, char **start, off_t off, int count,
 	{
 		mutex_lock (&(pContext->DvbContext->Lock));
 
-		len = sprintf(page, "%x\n", pContext->FrameRate);
+		len = sprintf(page, "%u\n", pContext->FrameRate);
 
 		mutex_unlock (&(pContext->DvbContext->Lock));
 	}
