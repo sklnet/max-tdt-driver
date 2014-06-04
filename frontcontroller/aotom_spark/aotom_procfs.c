@@ -69,7 +69,6 @@ static int led1_pattern_write(struct file *file, const char __user *buf,
 {
   char *page;
   long icon;
-  int which,on;
   int ret = -ENOMEM;
 
   printk("%s(%ld, ", __FUNCTION__, count);
@@ -86,6 +85,7 @@ static int led1_pattern_write(struct file *file, const char __user *buf,
       icon = simple_strtol(page, NULL, 0);
       if ((icon>=1)&&(icon<=45)) {
         aotomSetIcon(0,(int)icon);
+      }
       else if ((icon>=101)&&(icon<145)) {
         aotomSetIcon(1,(int)icon-100);
       }
@@ -112,7 +112,7 @@ struct fp_procs
 } fp_procs[] =
 {
   { "stb/fp/led0_pattern", NULL, led0_pattern_write },
-  { "stb/fp/led1_pattern", NULL, led0_pattern_write },
+  { "stb/fp/led1_pattern", NULL, led1_pattern_write },
 };
 
 void create_proc_fp(void)
