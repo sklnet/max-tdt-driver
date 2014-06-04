@@ -301,8 +301,23 @@ static int aotomSetIcon(int which, int on)
 	return res;
 }
 
+static int aotomSetLed(int which, int on)
+{
+	int  res = 0;
+	dprintk(5, "%s > %d, %d\n", __func__, which, on);
+	if (which < 0 || which >= LASTLED)
+	{
+		printk("VFD/AOTOM led number out of range %d\n", which);
+		return -EINVAL;
+	}
+	res = YWPANEL_VFD_SetLed(which,on);
+	led_state[which].state = on;
+	return res;
+}
+
 /* export for later use in e2_proc */
 //EXPORT_SYMBOL(aotomSetIcon);
+//EXPORT_SYMBOL(aotomSetLed);
 
 static ssize_t AOTOMdev_write(struct file *filp, const char *buff, size_t len, loff_t *off)
 {
@@ -867,6 +882,9 @@ static struct platform_driver aotom_rtc_driver = {
 	},
 };
 
+extern void create_proc_fp(void);
+extern void remove_proc_fp(void);
+
 static int __init aotom_init_module(void)
 {
 	int i;
@@ -910,6 +928,8 @@ static int __init aotom_init_module(void)
 		printk(KERN_ERR "%s platform_device_register_simple failed: %ld\n",
 				__func__, PTR_ERR(rtc_pdev));
 
+	create_proc_fp();
+
 	dprintk(5, "%s <\n", __func__);
 
 	return 0;
@@ -951,6 +971,9 @@ static void __exit aotom_cleanup_module(void)
 	unregister_chrdev(VFD_MAJOR,"VFD");
 	YWPANEL_VFD_Term();
 	printk("Fulan front panel module unloading\n");
+
+	remove_proc_fp();
+
 }
 
 module_init(aotom_init_module);

@@ -5,6 +5,7 @@ else
     aotom-objs += aotom_trace.o
     aotom-objs += aotom_i2csoft.o
     aotom-objs += aotom_vfd.o
+    aotom-objs += aotom_procfs.o
     aotom-objs += aotom_main.o
 
     obj-m += aotom.o

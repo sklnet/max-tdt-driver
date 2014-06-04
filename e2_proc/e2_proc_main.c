@@ -588,7 +588,11 @@ struct ProcStructure_s e2Proc[] =
 	{cProcDir  , "stb/fp"                                                           , NULL, NULL, NULL, NULL, ""},
 	{cProcEntry, "stb/fp/lnb_sense1"                                                , NULL, NULL, NULL, NULL, ""},
 	{cProcEntry, "stb/fp/lnb_sense2"                                                , NULL, NULL, NULL, NULL, ""},
+#if defined(SPARK) || defined(SPARK7162)
+	{cProcEntry, "stb/fp/led0_pattern"                                              , NULL, NULL, NULL, NULL, ""},
+#else
 	{cProcEntry, "stb/fp/led0_pattern"                                              , NULL, NULL, default_write_proc, NULL, ""},
+#endif
 	{cProcEntry, "stb/fp/led_pattern_speed"                                         , NULL, NULL, default_write_proc, NULL, ""},
 	{cProcEntry, "stb/fp/version"                                                   , NULL, zero_read, NULL, NULL, ""},
 	{cProcEntry, "stb/fp/wakeup_time"                                               , NULL, wakeup_time_read, wakeup_time_write, NULL, ""},
