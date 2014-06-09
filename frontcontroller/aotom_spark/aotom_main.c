@@ -110,7 +110,8 @@ static int VFD_Show_Icon(LogNum_T log_num, int log_stat)
 static struct task_struct *draw_task = 0;
 static int draw_thread_stop  = 1;
 
-static int aotomSetIcon(int which, int on);
+int aotomSetIcon(int which, int on);
+int aotomSetLed(int which, int on);
 
 static void clear_display(void)
 {
@@ -282,7 +283,7 @@ int vfd_init_func(void)
 	return 0;
 }
 
-static int aotomSetIcon(int which, int on)
+int aotomSetIcon(int which, int on)
 {
 	int  res = 0;
 
@@ -307,7 +308,7 @@ static int aotomSetIcon(int which, int on)
 	return res;
 }
 
-static int aotomSetLed(int which, int on)
+int aotomSetLed(int which, int on)
 {
 	int  res = 0;
 	dprintk(5, "%s > %d, %d\n", __func__, which, on);
