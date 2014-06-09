@@ -594,6 +594,10 @@ struct ProcStructure_s e2Proc[] =
 	{cProcEntry, "stb/fp/wakeup_time"                                               , NULL, wakeup_time_read, wakeup_time_write, NULL, ""},
 	{cProcEntry, "stb/fp/was_timer_wakeup"                                          , NULL, NULL, NULL, NULL, ""},
 	{cProcEntry, "stb/fp/rtc"                                                       , NULL, zero_read, default_write_proc, NULL, ""},
+#if defined(SPARK) || defined(SPARK7162)
+        {cProcEntry, "stb/fp/aotom_led"                                                       , NULL, NULL, NULL, NULL, ""},
+        {cProcEntry, "stb/fp/aotom_icon"                                                       , NULL, NULL, NULL, NULL, ""},
+#endif
 
 	{cProcDir  , "stb/tsmux"                                                        , NULL, NULL, NULL, NULL, ""},
 	{cProcEntry, "stb/tsmux/input0"                                                 , NULL, NULL, NULL, NULL, ""},
