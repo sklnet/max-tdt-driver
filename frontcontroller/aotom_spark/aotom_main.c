@@ -287,14 +287,20 @@ static int aotomSetIcon(int which, int on)
 	int  res = 0;
 
 	dprintk(5, "%s > %d, %d\n", __func__, which, on);
-	if (which < 1 || which > 45)
+	if (which < 1 || which > 46)
 	{
 		printk("VFD/AOTOM icon number out of range %d\n", which);
 		return -EINVAL;
 	}
 
-	which-=1;
-	res = VFD_Show_Icon(((which/15)+11)*16+(which%15)+1, on);
+	if (which == 46) {
+		VFD_set_all_icons(on);
+	}
+	else {
+		which-=1;
+		res = VFD_Show_Icon(((which/15)+11)*16+(which%15)+1, on);
+	}
+
 
 	dprintk(10, "%s <\n", __func__);
 
@@ -316,8 +322,8 @@ static int aotomSetLed(int which, int on)
 }
 
 /* export for later use in e2_proc */
-//EXPORT_SYMBOL(aotomSetIcon);
-//EXPORT_SYMBOL(aotomSetLed);
+EXPORT_SYMBOL(aotomSetIcon);
+EXPORT_SYMBOL(aotomSetLed);
 
 static ssize_t AOTOMdev_write(struct file *filp, const char *buff, size_t len, loff_t *off)
 {

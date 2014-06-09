@@ -11,9 +11,9 @@
 /*
  *  /proc/stb/fp
  *             |
- *             +--- led0_pattern (w)
+ *             +--- aotom_led (w)
  *             |
- *             +--- led1_pattern (w)
+ *             +--- aotom_icon (w)
 */
 
 extern int install_e2_procs(char *name, read_proc_t *read_proc, write_proc_t *write_proc, void *data);
@@ -27,7 +27,7 @@ extern void VFD_set_all_icons(int onoff);
 // String format: xy
 // x is 0/1 and indicates if the led must be off or on
 // y is the led number (between 0 and LASTLED-1)
-static int led0_pattern_write(struct file *file, const char __user *buf,
+static int aotom_led_pattern_write(struct file *file, const char __user *buf,
                            unsigned long count, void *data)
 {
   char *page;
@@ -64,7 +64,7 @@ static int led0_pattern_write(struct file *file, const char __user *buf,
 // String format: xy
 // x is 0/1 and indicates if the icon must be off or on
 // y is the led number (between 1 and 46). If y==46, all the icons are set.
-static int led1_pattern_write(struct file *file, const char __user *buf,
+static int aotom_icon_pattern_write(struct file *file, const char __user *buf,
                            unsigned long count, void *data)
 {
   char *page;
@@ -83,17 +83,11 @@ static int led1_pattern_write(struct file *file, const char __user *buf,
       printk("%s", page);
 
       icon = simple_strtol(page, NULL, 0);
-      if ((icon>=1)&&(icon<=45)) {
+      if ((icon>=1)&&(icon<=46)) {
         aotomSetIcon(0,(int)icon);
       }
-      else if ((icon>=101)&&(icon<145)) {
+      else if ((icon>=101)&&(icon<=146)) {
         aotomSetIcon(1,(int)icon-100);
-      }
-      else if (icon==46) {
-        VFD_set_all_icons(0);
-      }
-      else if (icon==146) {
-        VFD_set_all_icons(1);
       }
       ret = count;
     }
@@ -111,8 +105,8 @@ struct fp_procs
   write_proc_t *write_proc;
 } fp_procs[] =
 {
-  { "stb/fp/led0_pattern", NULL, led0_pattern_write },
-  { "stb/fp/led1_pattern", NULL, led1_pattern_write },
+  { "stb/fp/aotom_led", NULL, aotom_led_pattern_write },
+  { "stb/fp/aotom_icon", NULL, aotom_icon_pattern_write },
 };
 
 void create_proc_fp(void)
