@@ -19,9 +19,8 @@
 extern int install_e2_procs(char *name, read_proc_t *read_proc, write_proc_t *write_proc, void *data);
 extern int remove_e2_procs(char *name, read_proc_t *read_proc, write_proc_t *write_proc);
 
-extern int aotomSetIcon(int which, int on);
-extern int aotomSetLed(int which, int on);
-extern void VFD_set_all_icons(int onoff);
+extern static int aotomSetIcon(int which, int on);
+extern static int aotomSetLed(int which, int on);
 
 // Proc for activating main led
 // String format: xy
