@@ -45,10 +45,10 @@ static int aotom_led_pattern_write(struct file *file, const char __user *buf,
       printk("%s", page);
       led = simple_strtol(page, NULL, 0);
       if ((led>=0)&&(led<LASTLED)) {
-        aotomSetLed(0,(int)led);
+        aotomSetLed((int)led,0);
       }
       else if ((led>=10)&&(led<(10+LASTLED))) {
-        aotomSetLed(1,(int)led-10);
+        aotomSetLed((int)led-10,1);
       }
       ret = count;
     }
@@ -83,10 +83,10 @@ static int aotom_icon_pattern_write(struct file *file, const char __user *buf,
 
       icon = simple_strtol(page, NULL, 0);
       if ((icon>=1)&&(icon<=46)) {
-        aotomSetIcon(0,(int)icon);
+        aotomSetIcon((int)icon,0);
       }
       else if ((icon>=101)&&(icon<=146)) {
-        aotomSetIcon(1,(int)icon-100);
+        aotomSetIcon((int)icon-100,1);
       }
       ret = count;
     }
