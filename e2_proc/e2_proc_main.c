@@ -595,6 +595,7 @@ struct ProcStructure_s e2Proc[] =
 	{cProcEntry, "stb/fp/was_timer_wakeup"                                          , NULL, NULL, NULL, NULL, ""},
 	{cProcEntry, "stb/fp/rtc"                                                       , NULL, zero_read, default_write_proc, NULL, ""},
 #if defined(SPARK) || defined(SPARK7162)
+        {cProcEntry, "stb/fp/aotom"                                                       , NULL, NULL, NULL, NULL, ""},
         {cProcEntry, "stb/fp/aotom_led"                                                       , NULL, NULL, NULL, NULL, ""},
         {cProcEntry, "stb/fp/aotom_icon"                                                       , NULL, NULL, NULL, NULL, ""},
 #endif
